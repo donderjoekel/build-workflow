@@ -142,7 +142,7 @@ jobs:
           test_url=$(jq -r '.test_url' < VERSION.json)
           exitcode=0
           docker run --platform="${PLATFORM}" --network host -d --name service "${IMAGE}"
-          echo "${test_url}"
+          docker logs -f --until=10s service
           curl -fsSL --retry-all-errors --retry 60 --retry-max-time 120 -m 10 -b /dev/shm/cookie "${test_url}" --output /dev/null || exitcode=$?
           docker logs service > "${PACKAGE_VERSION}-test.log" 2>&1
           [[ ${exitcode} == 0 ]] && echo "result=ok" >> $GITHUB_OUTPUT || echo "result=nok" >> $GITHUB_OUTPUT
