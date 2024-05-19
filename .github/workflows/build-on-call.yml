@@ -256,7 +256,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: master
+          ref: main
 
       - name: Update "tags.json" File
         uses: nick-fields/retry@v3
